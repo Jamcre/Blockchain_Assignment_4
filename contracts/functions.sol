@@ -406,4 +406,29 @@ contract DecentralizedInsurance {
         // Increment to the next company ID for future registrations
         nextCompanyId++; // Increment to the next company id
     }
+    function listBannedCompanies() external view returns (string[] memory) {
+    uint count = 0;
+    
+    // Count banned companies
+    for (uint i = 1; i < nextCompanyId; i++) {
+        if (bannedCompanyNames[companies[i].name]) {
+            count++;
+        }
+    }
+
+    // Create an array to store banned company names
+    string[] memory bannedCompanies = new string[](count);
+    uint index = 0;
+
+    // Add banned companies to the array
+    for (uint i = 1; i < nextCompanyId; i++) {
+        if (bannedCompanyNames[companies[i].name]) {
+            bannedCompanies[index] = companies[i].name;
+            index++;
+        }
+    }
+
+    return bannedCompanies;
+}
+
 }
